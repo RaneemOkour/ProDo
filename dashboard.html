@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Dashboard - ProDo</title>
-    <link rel="icon" type="image/png" href="logo.png?v=1">
+    <link class="favicon" rel="icon" type="image/png" href="logo.png?v=1">
 </head>
 <body>
 
@@ -40,9 +40,9 @@
                 <div class="board-column">
                     <div class="column-header">
                         <h3>To Do</h3>
-                        <span class="task-count">2</span>
+                        <span class="task-count" id="todo-count">2</span>
                     </div>
-                    <div class="task-list">
+                    <div class="task-list" id="todo-list">
                         <div class="task-card">
                             <h4>Design database schema</h4>
                             <p>Create collection structures for users and tasks in MongoDB.</p>
@@ -54,37 +54,37 @@
                             <span class="badge medium">Medium</span>
                         </div>
                     </div>
-                    <button class="add-task-btn">+ Add a task</button>
+                    <button class="add-task-btn" id="add-todo-btn">+ Add a task</button>
                 </div>
 
                 <div class="board-column">
                     <div class="column-header">
                         <h3>In Progress</h3>
-                        <span class="task-count">1</span>
+                        <span class="task-count" id="inprogress-count">1</span>
                     </div>
-                    <div class="task-list">
+                    <div class="task-list" id="inprogress-list">
                         <div class="task-card">
                             <h4>Build dashboard layout</h4>
                             <p>Structure html elements for sidebar, navbar and boards.</p>
                             <span class="badge high">High</span>
                         </div>
                     </div>
-                    <button class="add-task-btn">+ Add a task</button>
+                    <button class="add-task-btn" id="add-inprogress-btn">+ Add a task</button>
                 </div>
 
                 <div class="board-column">
                     <div class="column-header">
                         <h3>Done</h3>
-                        <span class="task-count">1</span>
+                        <span class="task-count" id="done-count">1</span>
                     </div>
-                    <div class="task-list">
+                    <div class="task-list" id="done-list">
                         <div class="task-card">
                             <h4>Create login UI</h4>
                             <p>Fine-tune input focus effects and Google auth layout.</p>
                             <span class="badge success">Done</span>
                         </div>
                     </div>
-                    <button class="add-task-btn">+ Add a task</button>
+                    <button class="add-task-btn" id="add-done-btn">+ Add a task</button>
                 </div>
 
             </section>
@@ -93,5 +93,6 @@
 
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
