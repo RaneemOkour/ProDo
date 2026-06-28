@@ -1,0 +1,104 @@
+/* 1. إعدادات عامة للصفحة لتصفير الهوامش التلقائية للمتصفح */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. تنسيق الخلفية وجعل المحتوى في منتصف الشاشة تماماً */
+body {
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 3. تنسيق الصندوق الرئيسي لنموذج تسجيل الدخول */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* 4. تنسيق العناوين والنصوص */
+.login-container h1 {
+    color: #333333;
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.login-container p {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* 5. ترتيب حقول الإدخال عمودياً */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #444444;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* تأثير عند الضغط الماوس داخل الحقل */
+.form-group input:focus {
+    border-color: #007bff;
+}
+
+/* 6. تنسيق زر تسجيل الدخول */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* تأثير عند تمرير الماوس فوق الزر */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 7. تنسيق الروابط السفلية */
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
