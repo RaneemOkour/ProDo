@@ -1,7 +1,7 @@
 /* 1. استيراد الخطوط الاحترافية من Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
 
-/* 2. تعريف لوحة ألوان المشورع المعتمدة */
+/* 2. تعريف لوحة ألوان المشروع المعتمدة */
 :root {
     --primary-color: #2D6A4F;       /* الأزرار الرئيسية، الروابط النشطة */
     --hover-color: #40916C;         /* الـ Hover للأزرار والأيقونات */
@@ -13,8 +13,8 @@
     --success-color: #52B788;
     --warning-color: #F4A261;
     --error-color: #E76F51;
-    --border-color: #D8F3DC;
-    --card-bg: #FFFFFF;
+    --border-color: #D8F3DC;        /* الـ Border الفاتح جداً المطلوب */
+    --card-bg: #FFFFFF;            /* الكارد أبيض تماماً #FFFFFF كما طلبتِ */
 }
 
 /* 3. إعدادات تصفير وتوحيد الصفحة */
@@ -32,69 +32,119 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 /* 5. تنسيق صندوق تسجيل الدخول */
 .login-container {
-    background-color: var(--card-bg);
-    padding: 40px;
+    background-color: var(--card-bg); /* أبيض تماماً */
+    padding: 40px 30px;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px rgba(27, 67, 50, 0.08);
+    border: 1px solid var(--border-color); /* التعديل: إطار فاتح جداً #D8F3DC */
+    box-shadow: 0 4px 24px rgba(27, 67, 50, 0.05);
     width: 100%;
     max-width: 400px;
 }
 
-/* 6. تنسيق العناوين (باستخدام خط Poppins) */
-.login-container h1 {
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-color);
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 8px;
+/* 6. تنسيق منطقة اللوجو على نمط تريلو */
+.logo-area {
     text-align: center;
+    margin-bottom: 28px;
 }
 
-.login-container p {
-    color: #555555;
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* المسافة بين اللوغو والاسم */
+    margin-bottom: 4px;
+}
+
+.main-logo {
+    width: 40px; /* حجم اللوجو المعتمد من صورتك */
+    height: auto;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.tagline {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--hover-color);
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.sub-text {
+    color: #52796F; /* التعديل: لون النص الصغير أفتح قليلاً #52796F كما طلبتِ */
     font-size: 14px;
-    margin-bottom: 24px;
-    text-align: center;
+    margin-top: 8px;
 }
 
 /* 7. تنسيق حقول الإدخال */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
     color: var(--text-color);
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #D8F3DC; /* التعديل: الحواف الفاتحة جداً المعتمدة */
     border-radius: 8px;
     font-size: 14px;
-    background-color: #fafdfb;
+    background-color: #FAFCFA;
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
-/* التفاعل عند الضغط داخل الحقل */
+/* التفاعل عند الضغط داخل الحقل (Focus) */
 .form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+    border-color: #40916C; /* التعديل المطلوب بدقة */
+    box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.15); /* التعديل المطلوب بدقة */
+    background-color: #FFFFFF;
 }
 
-/* 8. تنسيق زر تسجيل الدخول بالألوان الجديدة */
-button {
+/* 8. تنسيق ميزة تذكرني (Remember Me) */
+.remember-me-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.remember-me-container input {
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.remember-me-container label {
+    font-size: 14px;
+    color: #52796F;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 9. تنسيق زر تسجيل الدخول بالألوان الجديدة */
+button[type="submit"] {
     width: 100%;
     padding: 12px;
     background-color: var(--primary-color);
@@ -103,29 +153,82 @@ button {
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
 }
 
 /* تأثير الـ Hover المعتمد باللون المخصص له */
-button:hover {
+button[type="submit"]:hover {
     background-color: var(--hover-color);
 }
 
-/* 9. الروابط السفلية */
+/* خط الفصل Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #88B2AC;
+    font-size: 12px;
+    margin: 24px 0;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider:not(:empty)::before { margin-right: .5em; }
+.divider:not(:empty)::after { margin-left: .5em; }
+
+/* أزرار الدخول الاجتماعي */
+.social-login-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.social-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+.social-btn:hover {
+    background-color: #F6FFF8;
+    border-color: var(--accent-color);
+}
+
+/* 10. الروابط السفلية */
 .form-footer {
-    margin-top: 20px;
+    margin-top: 24px;
     text-align: center;
 }
 
 .form-footer a {
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .form-footer a:hover {
-    color: var(--hover-color);
     text-decoration: underline;
 }
