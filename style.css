@@ -232,3 +232,244 @@ button[type="submit"]:hover {
 .form-footer a:hover {
     text-decoration: underline;
 }
+/* ==========================================================================
+   11. تنسيقات لوحة التحكم الرئيسية (Dashboard Styles)
+   ========================================================================== */
+
+/* الحاوية الكبرى المقسمة لجزأين: شريط جانبي ومنطقة العمل */
+.dashboard-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-color);
+}
+
+/* --- الشـريط الجـانبي (Sidebar) --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding-left: 8px;
+}
+
+.sidebar-logo {
+    width: 32px;
+    height: auto;
+}
+
+.sidebar-brand h2 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #52796F;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #E8F5E9;
+    color: var(--primary-color);
+}
+
+/* --- منطقة العمل الرئيسية (Main Content) --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* الشريط العلوي (Navbar) */
+.top-navbar {
+    height: 70px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+}
+
+.page-title h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* --- لوحة تريلو وتوزيع الأعمدة (Kanban Board) --- */
+.board-area {
+    flex: 1;
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto; /* للسماح بالتمرير الأفقي إذا زادت الأعمدة */
+    align-items: flex-start;
+}
+
+/* العمود الواحد */
+.board-column {
+    width: 300px;
+    background-color: #EDF5F0; /* خلفية رمادية مخضرة هادئة للعمود */
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.column-header h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.task-count {
+    background-color: var(--border-color);
+    color: var(--text-color);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto; /* تمرير عمودي إذا زادت البطاقات داخل العمود */
+    margin-bottom: 12px;
+}
+
+/* بطاقة المهمة (Task Card) */
+.task-card {
+    background-color: var(--card-bg);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(216, 243, 220, 0.5);
+    box-shadow: 0 2px 4px rgba(27, 67, 50, 0.02);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(27, 67, 50, 0.06);
+}
+
+.task-card h4 {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.task-card p {
+    font-size: 12px;
+    color: #52796F;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+/* الـ Badges الملونة للحالات والأهمية */
+.badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.badge.high {
+    background-color: #FCE8E6;
+    color: var(--error-color);
+}
+
+.badge.medium {
+    background-color: #FFF3E0;
+    color: var(--warning-color);
+}
+
+.badge.success {
+    background-color: #E8F5E9;
+    color: var(--success-color);
+}
+
+/* زر إضافة مهمة */
+.add-task-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #52796F;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.add-task-btn:hover {
+    background-color: rgba(45, 106, 79, 0.08);
+    color: var(--primary-color);
+}

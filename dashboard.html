@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard - ProDo</title>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="logo.png" alt="ProDo Logo" class="sidebar-logo">
+                <h2>ProDo</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active">📋 My Board</a>
+                <a href="#" class="menu-item">📈 Analytics</a>
+                <a href="#" class="menu-item">⚙️ Settings</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-navbar">
+                <div class="page-title">
+                    <h1>My Personal Board</h1>
+                </div>
+                <div class="user-profile">
+                    <span class="user-name">Raneem</span>
+                    <div class="avatar">R</div>
+                </div>
+            </header>
+
+            <section class="board-area">
+                
+                <div class="board-column">
+                    <div class="column-header">
+                        <h3>To Do</h3>
+                        <span class="task-count">2</span>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-card">
+                            <h4>Design database schema</h4>
+                            <p>Create collection structures for users and tasks in MongoDB.</p>
+                            <span class="badge high">High</span>
+                        </div>
+                        <div class="task-card">
+                            <h4>Write project documentation</h4>
+                            <p>Prepare setup instructions for GitHub repository.</p>
+                            <span class="badge medium">Medium</span>
+                        </div>
+                    </div>
+                    <button class="add-task-btn">+ Add a task</button>
+                </div>
+
+                <div class="board-column">
+                    <div class="column-header">
+                        <h3>In Progress</h3>
+                        <span class="task-count">1</span>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-card">
+                            <h4>Build dashboard layout</h4>
+                            <p>Structure html elements for sidebar, navbar and boards.</p>
+                            <span class="badge high">High</span>
+                        </div>
+                    </div>
+                    <button class="add-task-btn">+ Add a task</button>
+                </div>
+
+                <div class="board-column">
+                    <div class="column-header">
+                        <h3>Done</h3>
+                        <span class="task-count">1</span>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-card">
+                            <h4>Create login UI</h4>
+                            <p>Fine-tune input focus effects and Google auth layout.</p>
+                            <span class="badge success">Done</span>
+                        </div>
+                    </div>
+                    <button class="add-task-btn">+ Add a task</button>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
