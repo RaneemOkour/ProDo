@@ -1,38 +1,43 @@
-// دالة موحدة لإضافة مهمة لأي عمود بناءً على الـ IDs
+// ==========================================================================
+// 1. دالة إضافة المهام وحفظها وتحديث العدادات
+// ==========================================================================
+
 function setupColumn(buttonId, listId, countId) {
     const addBtn = document.getElementById(buttonId);
     const taskList = document.getElementById(listId);
-    const taskCount = document.getElementById(countId);
 
-    if (addBtn && taskList && taskCount) {
+    if (addBtn && taskList) {
         addBtn.addEventListener('click', function() {
             const taskTitle = prompt("Enter task title:");
             
             if (taskTitle && taskTitle.trim() !== "") {
-                // إنشاء الكارد الفعلي هنا وتجهيزه للسحب فوراً
-                const newCard = document.createElement('div');
-                newCard.className = 'task-card';
-                newCard.setAttribute('draggable', 'true'); // تفعيل ميزة السحب للبطاقة الجديدة
+                createTaskCard(taskTitle, "New task description goes here...", "Medium", listId);
                 
-                newCard.innerHTML = `
-                    <h4>${taskTitle}</h4>
-                    <p>New task description goes here...</p>
-                    <span class="badge medium">Medium</span>
-                `;
-                
-                taskList.appendChild(newCard);
-                
-                // تحديث العداد الخاص بالعمود الحالي
-                taskCount.textContent = taskList.getElementsByClassName('task-card').length;
+                // حفظ التغييرات فوراً في ذاكرة المتصفح
+                saveBoardState();
             }
         });
     }
 }
 
-// تشغيل الميزة للأعمدة الثلاثة فور تحميل الصفحة
-setupColumn('add-todo-btn', 'todo-list', 'todo-count');
-setupColumn('add-inprogress-btn', 'inprogress-list', 'inprogress-count');
-setupColumn('add-done-btn', 'done-list', 'done-count');
+// دالة فرعية لبناء بطاقة HTML وحقنها في العمود المناسب
+function createTaskCard(title, description, priority, columnId) {
+    const taskList = document.getElementById(columnId);
+    if (!taskList) return;
+
+    const newCard = document.createElement('div');
+    newCard.className = 'task-card';
+    newCard.setAttribute('draggable', 'true');
+    
+    newCard.innerHTML = `
+        <h4>${title}</h4>
+        <p>${description}</p>
+        <span class="badge ${priority.toLowerCase()}">${priority}</span>
+    `;
+    
+    taskList.appendChild(newCard);
+    updateAllCounters();
+}
 
 // ==========================================================================
 // 2. برمجة ميزة السحب والإفلات (Drag and Drop)
@@ -40,47 +45,136 @@ setupColumn('add-done-btn', 'done-list', 'done-count');
 
 let draggedTask = null;
 
-// الاستماع لحدث بدء السحب على مستوى الصفحة كاملة
 document.addEventListener('dragstart', function(e) {
     if (e.target.classList.contains('task-card')) {
         draggedTask = e.target;
-        e.target.style.opacity = '0.5'; // جعل البطاقة شبه شفافة أثناء السحب
+        e.target.style.opacity = '0.5';
     }
 });
 
-// الاستماع لحدث نهاية السحب لإرجاع المظهر الطبيعي
 document.addEventListener('dragend', function(e) {
     if (e.target.classList.contains('task-card')) {
-        e.target.style.opacity = '1'; // إرجاع الشفافية لطبيعتها
+        e.target.style.opacity = '1';
     }
 });
 
-// السماح بالإفلات داخل أعمدة المهام
 const columns = document.querySelectorAll('.task-list');
 columns.forEach(column => {
     column.addEventListener('dragover', function(e) {
-        e.preventDefault(); // خطوة إجبارية للسماح بالإفلات
+        e.preventDefault();
     });
 
     column.addEventListener('drop', function(e) {
         e.preventDefault();
         if (draggedTask) {
-            // نقل البطاقة فعلياً داخل قائمة العمود الجديد
             column.appendChild(draggedTask);
             
-            // تحديث جميع العدادات في اللوحة تلقائياً بعد النقل
-            updateAllCounters();
+            // حفظ التغييرات بعد سحب وإفلات البطاقة في مكانها الجديد
+            saveBoardState();
         }
     });
 });
 
+// ==========================================================================
+// 3. برمجة الحفظ التلقائي (Local Storage Logic)
+// ==========================================================================
+
+// دالة لتجميع وحفظ حالة اللوحة كاملة
+function saveBoardState() {
+    const boardData = {
+        todo: getTasksFromColumn('todo-list'),
+        inprogress: getTasksFromColumn('inprogress-list'),
+        done: getTasksFromColumn('done-list')
+    };
+    // تحويل المصفوفات بنص ذكي وحفظها في المتصفح
+    localStorage.setItem('prodo_board', JSON.stringify(boardData));
+}
+
+// دالة فرعية لاستخراج بيانات البطاقات من عمود معين
+function getTasksFromColumn(listId) {
+    const list = document.getElementById(listId);
+    const cards = list.getElementsByClassName('task-card');
+    const tasks = [];
+    
+    for (let card of cards) {
+        tasks.push({
+            title: card.querySelector('h4').textContent,
+            description: card.querySelector('p').textContent,
+            priority: card.querySelector('.badge').textContent
+        });
+    }
+    return tasks;
+}
+
+// دالة لاستعادة البيانات المحفوظة فور فتح الصفحة
+function loadBoardState() {
+    const savedData = localStorage.getItem('prodo_board');
+    
+    if (savedData) {
+        const boardData = JSON.parse(savedData);
+        
+        // تفريغ اللوحة القديمة الثابتة أولاً لبناء المحفوظ
+        document.getElementById('todo-list').innerHTML = '';
+        document.getElementById('inprogress-list').innerHTML = '';
+        document.getElementById('done-list').innerHTML = '';
+        
+        // إعادة بناء المهام المحفوظة داخل أعمدتها الصحيحة
+        boardData.todo.forEach(t => createTaskCard(t.title, t.description, t.priority, 'todo-list'));
+        boardData.inprogress.forEach(t => createTaskCard(t.title, t.description, t.priority, 'inprogress-list'));
+        boardData.done.forEach(t => createTaskCard(t.title, t.description, t.priority, 'done-list'));
+    }
+    updateAllCounters();
+}
+
 // دالة ذكية لتحديث عدادات الأعمدة الثلاثة فوراً
 function updateAllCounters() {
-    const todoCount = document.getElementById('todo-list').getElementsByClassName('task-card').length;
-    const inprogressCount = document.getElementById('inprogress-list').getElementsByClassName('task-card').length;
-    const doneCount = document.getElementById('done-list').getElementsByClassName('task-card').length;
-
-    document.getElementById('todo-count').textContent = todoCount;
-    document.getElementById('inprogress-count').textContent = inprogressCount;
-    document.getElementById('done-count').textContent = doneCount;
+    ['todo-list', 'inprogress-list', 'done-list'].forEach(id => {
+        const count = document.getElementById(id).getElementsByClassName('task-card').length;
+        const countId = id.replace('-list', '-count');
+        document.getElementById(countId).textContent = count;
+    });
 }
+// ==========================================================================
+// 🔑 فحص كود صفحة تسجيل الدخول والتحقق من البيانات (Form Validation)
+// ==========================================================================
+
+// نتحقق أولاً إذا كنا متواجدين داخل صفحة تسجيل الدخول (عن طريق البحث عن حقل اليوزرنيم)
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const loginForm = document.querySelector('form');
+
+if (loginForm && usernameInput && passwordInput) {
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // منع الصفحة من إعادة التحميل التلقائي الافتراضي
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        // 1. فحص البريد الإلكتروني البسيط (التأكد من احتوائه على @ ونطاق)
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailPattern.test(username)) {
+            alert("Please enter a valid email address! (e.g., example@mail.com)");
+            return;
+        }
+
+        // 2. فحص كلمة المرور (التأكد من أنها لا تقل عن 6 أحرف لحماية الحساب)
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long!");
+            return;
+        }
+
+        // 3. النقل التلقائي إلى لوحة التحكم إذا كانت البيانات سليمة
+        window.location.href = "dashboard.html";
+    });
+}
+
+// ==========================================================================
+// 4. تشغيل اللوحة واستعادة البيانات فور تحميل الصفحة
+// ==========================================================================
+setupColumn('add-todo-btn', 'todo-list', 'todo-count');
+setupColumn('add-inprogress-btn', 'inprogress-list', 'inprogress-count');
+setupColumn('add-done-btn', 'done-list', 'done-count');
+
+// استدعاء الحفظ التلقائي فور تشغيل الصفحة
+loadBoardState();
