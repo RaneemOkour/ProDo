@@ -151,7 +151,7 @@ if (loginForm && usernameInput && passwordInput) {
         const password = passwordInput.value.trim();
 
         // 1. فحص البريد الإلكتروني البسيط (التأكد من احتوائه على @ ونطاق)
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[com|net|org]+$/;
         
         if (!emailPattern.test(username)) {
             alert("Please enter a valid email address! (e.g., example@mail.com)");
