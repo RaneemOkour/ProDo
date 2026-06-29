@@ -129,43 +129,89 @@ function loadBoardState() {
 // دالة ذكية لتحديث عدادات الأعمدة الثلاثة فوراً
 function updateAllCounters() {
     ['todo-list', 'inprogress-list', 'done-list'].forEach(id => {
-        const count = document.getElementById(id).getElementsByClassName('task-card').length;
-        const countId = id.replace('-list', '-count');
-        document.getElementById(countId).textContent = count;
+        const listElement = document.getElementById(id);
+        if (listElement) {
+            const count = listElement.getElementsByClassName('task-card').length;
+            const countId = id.replace('-list', '-count');
+            const countElement = document.getElementById(countId);
+            if (countElement) countElement.textContent = count;
+        }
     });
 }
+
 // ==========================================================================
 // 🔑 فحص كود صفحة تسجيل الدخول والتحقق من البيانات (Form Validation)
 // ==========================================================================
 
-// نتحقق أولاً إذا كنا متواجدين داخل صفحة تسجيل الدخول (عن طريق البحث عن حقل اليوزرنيم)
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const loginForm = document.querySelector('form');
 
 if (loginForm && usernameInput && passwordInput) {
     loginForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // منع الصفحة من إعادة التحميل التلقائي الافتراضي
+        e.preventDefault();
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value.trim();
 
-        // 1. فحص البريد الإلكتروني البسيط (التأكد من احتوائه على @ ونطاق)
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[com|net|org]+$/;
+        // التعديل الصحيح: الأقواس الدائرية للفصل الصارم بين النطاقات المسموحة
+        const emailPattern = /^[^\s@]+@[^\s@]+\.(com|net|org)$/;
         
         if (!emailPattern.test(username)) {
-            alert("Please enter a valid email address! (e.g., example@mail.com)");
+            alert("Please enter a valid email address ending with .com, .net, or .org!");
             return;
         }
 
-        // 2. فحص كلمة المرور (التأكد من أنها لا تقل عن 6 أحرف لحماية الحساب)
         if (password.length < 6) {
             alert("Password must be at least 6 characters long!");
             return;
         }
 
-        // 3. النقل التلقائي إلى لوحة التحكم إذا كانت البيانات سليمة
         window.location.href = "dashboard.html";
+    });
+}
+
+// ==========================================================================
+// 🔄 برمجة التنقل الظاهري بين تبويبات لوحة التحكم (Sidebar Tabs Navigation)
+// ==========================================================================
+
+const btnBoard = document.getElementById('btn-board');
+const btnAnalytics = document.getElementById('btn-analytics');
+const btnSettings = document.getElementById('btn-settings');
+
+const contentBoard = document.getElementById('content-board');
+const contentAnalytics = document.getElementById('content-analytics');
+const contentSettings = document.getElementById('content-settings');
+
+const mainTitle = document.getElementById('main-title');
+const menuItems = document.querySelectorAll('.menu-item');
+
+function switchTab(clickedBtn, targetSection, titleText) {
+    if (contentBoard) contentBoard.style.display = 'none';
+    if (contentAnalytics) contentAnalytics.style.display = 'none';
+    if (contentSettings) contentSettings.style.display = 'none';
+
+    menuItems.forEach(item => item.classList.remove('active'));
+
+    if (targetSection) targetSection.style.display = 'flex';
+    if (clickedBtn) clickedBtn.classList.add('active');
+    if (mainTitle) mainTitle.textContent = titleText;
+}
+
+if (btnBoard && btnAnalytics && btnSettings) {
+    btnBoard.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab(btnBoard, contentBoard, 'My Personal Board');
+    });
+
+    btnAnalytics.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab(btnAnalytics, contentAnalytics, 'Performance Analytics');
+    });
+
+    btnSettings.addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab(btnSettings, contentSettings, 'Workspace Settings');
     });
 }
 
@@ -176,5 +222,4 @@ setupColumn('add-todo-btn', 'todo-list', 'todo-count');
 setupColumn('add-inprogress-btn', 'inprogress-list', 'inprogress-count');
 setupColumn('add-done-btn', 'done-list', 'done-count');
 
-// استدعاء الحفظ التلقائي فور تشغيل الصفحة
 loadBoardState();
